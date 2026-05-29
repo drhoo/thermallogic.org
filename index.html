@@ -1,84 +1,543 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thermal Logic | Beyond Cooling</title>
-  <meta name="description" content="Thermal Logic is a private research initiative exploring heat as exchange, gradient, pathway, storage, timing, surface behaviour, vibration, resonance, and conversion." />
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Thermal Logic — Heat-Origin Research / 热逻辑研究</title>
+  <meta name="description" content="Thermal Logic is a private research initiative exploring heat-origin design, thermal circuits, and new ways to understand, reduce, condition, convert, or control unwanted heat." />
+  <style>
+    .zh { color: #4d4b46; font-size: 0.94em; margin-top: 10px; }
+    .zh-title { display: block; font-size: 0.62em; letter-spacing: -0.03em; margin-top: 12px; color: #4d4b46; }
+    .lang-note { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-size: 13px; background: rgba(255,255,255,0.68); margin-bottom: 18px; }
+    .lang-note strong { color: var(--ink); }
+
+    :root {
+      --bg: #f7f6f2;
+      --ink: #181817;
+      --muted: #62615d;
+      --line: #d9d5ca;
+      --panel: #ffffff;
+      --warm: #b14a26;
+      --deep: #24323a;
+      --soft: #eee9df;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+
+    a { color: inherit; }
+
+    .wrap {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: rgba(247, 246, 242, 0.92);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 720;
+      letter-spacing: -0.03em;
+      font-size: 21px;
+    }
+
+    .mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 2px solid var(--ink);
+      display: grid;
+      place-items: center;
+      position: relative;
+      background: var(--panel);
+    }
+
+    .mark::before,
+    .mark::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      background: var(--warm);
+    }
+
+    .mark::before {
+      width: 14px;
+      height: 2px;
+      transform: rotate(35deg);
+    }
+
+    .mark::after {
+      width: 2px;
+      height: 14px;
+      transform: rotate(35deg);
+    }
+
+    .navlinks {
+      display: flex;
+      gap: 22px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .navlinks a {
+      text-decoration: none;
+    }
+
+    .hero {
+      padding: 86px 0 58px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+      gap: 52px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      color: var(--warm);
+      font-weight: 720;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(44px, 7vw, 82px);
+      line-height: 0.95;
+      letter-spacing: -0.07em;
+      margin: 0 0 26px;
+    }
+
+    .lead {
+      font-size: clamp(20px, 2.2vw, 28px);
+      line-height: 1.25;
+      letter-spacing: -0.035em;
+      color: var(--deep);
+      margin: 0 0 26px;
+      max-width: 760px;
+    }
+
+    .plain {
+      color: var(--muted);
+      font-size: 17px;
+      max-width: 690px;
+      margin: 0;
+    }
+
+    .hero-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 26px;
+      box-shadow: 0 20px 50px rgba(30, 28, 22, 0.08);
+    }
+
+    .diagram {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    section {
+      padding: 64px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      gap: 42px;
+      align-items: start;
+      margin-bottom: 34px;
+    }
+
+    h2 {
+      font-size: clamp(30px, 3.5vw, 48px);
+      line-height: 1;
+      letter-spacing: -0.055em;
+      margin: 0;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 24px;
+      min-height: 200px;
+    }
+
+    .card .num {
+      font-size: 13px;
+      font-weight: 720;
+      color: var(--warm);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h3 {
+      font-size: 22px;
+      line-height: 1.1;
+      letter-spacing: -0.035em;
+      margin: 0 0 12px;
+    }
+
+    .card p, .card li {
+      color: var(--muted);
+      margin: 0;
+      font-size: 15.5px;
+    }
+
+    .card ul {
+      padding-left: 18px;
+      margin: 0;
+    }
+
+    .wide {
+      background: var(--deep);
+      color: #fff;
+      border-radius: 30px;
+      padding: 38px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .wide p {
+      color: rgba(255,255,255,0.76);
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .wide h2 {
+      color: #fff;
+    }
+
+    .principles {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .principle {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 18px;
+      padding: 16px;
+      color: rgba(255,255,255,0.86);
+      font-size: 15px;
+    }
+
+    .research-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .research-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 18px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      margin-top: 8px;
+      border-radius: 50%;
+      background: var(--warm);
+      flex: 0 0 auto;
+    }
+
+    .research-item strong {
+      display: block;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .research-item span {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .contact {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 36px;
+      display: grid;
+      grid-template-columns: 1fr 0.8fr;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .contact p {
+      color: var(--muted);
+      font-size: 17px;
+      margin: 0 0 18px;
+    }
+
+    .button {
+      display: inline-flex;
+      padding: 13px 18px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 650;
+      margin-top: 8px;
+    }
+
+    .note {
+      background: var(--soft);
+      border-radius: 20px;
+      padding: 20px;
+      color: var(--muted);
+      font-size: 14.5px;
+    }
+
+    footer {
+      padding: 34px 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 850px) {
+      .hero-grid,
+      .section-head,
+      .wide,
+      .contact {
+        grid-template-columns: 1fr;
+      }
+
+      .cards,
+      .research-list,
+      .principles {
+        grid-template-columns: 1fr;
+      }
+
+      .navlinks { display: none; }
+      .hero { padding-top: 54px; }
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <div class="wrap">
+      <nav>
+        <div class="brand"><span class="mark" aria-hidden="true"></span> Thermal Logic</div>
+        <div class="navlinks">
+          <a href="#question">Question</a>
+          <a href="#frame">Frame</a>
+          <a href="#research">Research paths</a>
+          <a href="research.html">Research Notes</a>
+          <a href="#associate">Associate</a>
+        </div>
+      </nav>
+    </div>
+  </header>
 
-<header class="site-header">
-  <div class="brand">
-    <a href="index.html">Thermal Logic</a>
-    <span>热逻辑</span>
-  </div>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="research.html">Research Notes</a>
-  </nav>
-</header>
+  <main>
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow">Private research initiative · 私人研究项目</div>
+          <div class="lang-note"><strong>EN / 中文</strong> This page is intentionally bilingual.</div>
+          <h1>Beyond cooling.<span class="zh-title">超越冷却。</span></h1>
+          <p class="lead">Thermal Logic explores whether unwanted heat can be reduced, conditioned, redirected, converted, or partially cancelled closer to its point of origin.</p>
+          <p class="lead zh">热逻辑研究探索一个更深层的问题：不需要的热，是否可以在更接近其产生源头的位置被减少、调节、重新导向、转换，或部分抵消。</p>
+          <p class="plain">Modern engineering is highly developed at moving heat. We are interested in the deeper question: can heat be treated as a controllable system behaviour, not merely a waste product to be transported elsewhere?</p>
+          <p class="plain zh">现代工程已经非常擅长转移热量。我们关注的问题更进一步：热能否被视为一种可控制的系统行为，而不只是需要被搬运到别处的废弃物？</p>
+        </div>
+        <div class="hero-card" aria-label="Thermal logic diagram">
+          <svg class="diagram" viewBox="0 0 760 520" role="img" aria-labelledby="diagram-title">
+            <title id="diagram-title">Energy becoming useful work and waste heat, with Thermal Logic focusing on the transition point.</title>
+            <rect x="0" y="0" width="760" height="520" rx="34" fill="#f7f6f2"/>
+            <line x1="82" y1="260" x2="678" y2="260" stroke="#181817" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="150" cy="260" r="54" fill="#ffffff" stroke="#181817" stroke-width="4"/>
+            <circle cx="380" cy="260" r="70" fill="#24323a"/>
+            <circle cx="610" cy="260" r="54" fill="#ffffff" stroke="#181817" stroke-width="4"/>
+            <path d="M326 185 C372 220 390 293 434 335" fill="none" stroke="#b14a26" stroke-width="8" stroke-linecap="round"/>
+            <path d="M336 330 C384 296 400 223 444 186" fill="none" stroke="#b14a26" stroke-width="8" stroke-linecap="round" opacity="0.55"/>
+            <text x="150" y="254" text-anchor="middle" font-size="22" font-weight="700" fill="#181817">ENERGY</text>
+            <text x="150" y="282" text-anchor="middle" font-size="18" fill="#62615d">IN</text>
+            <text x="380" y="252" text-anchor="middle" font-size="22" font-weight="700" fill="#ffffff">ORIGIN</text>
+            <text x="380" y="282" text-anchor="middle" font-size="18" fill="rgba(255,255,255,0.72)">transition</text>
+            <text x="610" y="254" text-anchor="middle" font-size="22" font-weight="700" fill="#181817">HEAT</text>
+            <text x="610" y="282" text-anchor="middle" font-size="18" fill="#62615d">OUT</text>
+            <text x="380" y="88" text-anchor="middle" font-size="25" font-weight="700" fill="#181817">Study the birth of waste heat.</text>
+            <text x="380" y="426" text-anchor="middle" font-size="19" fill="#62615d">Not only transfer. Not only rejection. Control at origin.</text>
+          </svg>
+        </div>
+      </div>
+    </section>
 
-<main>
-  <section class="hero">
-    <p class="eyebrow">Private research initiative</p>
-    <h1>Beyond cooling.</h1>
-    <p class="lead">
-      Thermal Logic explores heat not merely as waste to move, but as exchange,
-      gradient, pathway, storage, timing, surface behaviour, vibration, resonance,
-      conversion, and possibly addressable thermal packets.
-    </p>
-    <p class="lead zh">
-      热逻辑研究的不只是“冷却”或“散热”，而是把热理解为交换、梯度、路径、
-      储存、时序、表面行为、振动、共振、转换，以及未来可能被寻址的热行为单元。
-    </p>
-  </section>
+    <section id="question">
+      <div class="wrap section-head">
+        <h2>The question<span class="zh-title">核心问题</span></h2>
+        <p>For centuries we have become better at generating, transferring, storing, insulating, and rejecting heat. Thermal Logic asks whether the next step is not simply better cooling, but a better design language for unwanted heat itself.<br><br><span class="zh">几个世纪以来，人类越来越擅长产生、传递、储存、隔绝和排出热量。热逻辑研究提出的问题是：下一步是否不只是“更好的冷却”，而是为不需要的热建立一种更好的设计语言？</span></p>
+      </div>
+      <div class="wrap cards">
+        <article class="card">
+          <div class="num">01</div>
+          <h3>Heat as origin</h3>
+          <p>At what moment does useful energy become unwanted thermal disorder, and can that transition be altered?</p>
+          <p class="zh">有用能量在什么时刻转变为不需要的热混乱？这个转变过程是否可以被改变？</p>
+        </article>
+        <article class="card">
+          <div class="num">02</div>
+          <h3>Heat as circuit</h3>
+          <p>Can thermal systems be treated with equivalents of resistance, capacitance, rectification, switching, oscillation, resonance, and conversion?</p>
+          <p class="zh">热系统是否也可以拥有类似电路中的电阻、电容、整流、开关、振荡、共振和转换？</p>
+        </article>
+        <article class="card">
+          <div class="num">03</div>
+          <h3>Heat as pattern</h3>
+          <p>Before heat becomes low-grade waste, does it retain exploitable structure through gradients, materials, surfaces, phonons, radiation, or phase behaviour?</p>
+          <p class="zh">在热变成低品位废热之前，它是否仍通过梯度、材料、表面、声子、辐射或相变行为保留某种可利用的结构？</p>
+        </article>
+      </div>
+    </section>
 
-  <section class="principle">
-    <h2>Open mind. Hard floor.</h2>
-    <p>
-      This project welcomes unusual questions, historical clues, and fresh models,
-      but every idea must return to known physics, clear definitions, repeatable
-      observation, and modest claims.
-    </p>
-    <p class="zh">
-      开放心态，坚实底线。欢迎新的问题、历史线索和不同模型，但所有观点都必须回到
-      已知物理、清晰定义、可重复观察和谨慎结论。
-    </p>
-  </section>
+    <section id="frame">
+      <div class="wrap wide">
+        <div>
+          <h2>Open mind. Hard floor.<span class="zh-title">开放思考，严格验证。</span></h2>
+          <p>Thermal Logic is not a claim of a finished answer. It is a disciplined inquiry into a foundational constraint. No genuine idea is off limits, but every idea must be willing to meet mechanism, evidence, and testability.<br><br><span class="zh">热逻辑研究并不声称已经找到答案。它是一项围绕基础性限制展开的严肃探索。任何真诚的想法都可以被提出，但每个想法都必须面对机制、证据和可测试性。</span></p>
+        </div>
+        <div class="principles">
+          <div class="principle">No miracle claims.<br><span class="zh">不作奇迹式声明。</span></div>
+          <div class="principle">No free-energy claims.<br><span class="zh">不作永动或免费能源声明。</span></div>
+          <div class="principle">No climate politics.<br><span class="zh">不参与气候政治争论。</span></div>
+          <div class="principle">No sales pitch.<br><span class="zh">不做销售宣传。</span></div>
+          <div class="principle">Mechanism first.<br><span class="zh">机制优先。</span></div>
+          <div class="principle">Evidence welcome.<br><span class="zh">欢迎证据。</span></div>
+        </div>
+      </div>
+    </section>
 
-  <section class="grid">
-    <article class="card">
-      <h2>Dynamic Thermal Control</h2>
-      <p>
-        The working frame is Dynamic Thermal Control: a design language for routing,
-        delaying, storing, shaping, selecting, and converting thermal behaviour.
-      </p>
-    </article>
+    <section id="research">
+      <div class="wrap section-head">
+        <h2>Research paths<span class="zh-title">研究路径</span></h2>
+        <p>The project begins by mapping existing work, forgotten ideas, adjacent fields, and practical mechanisms that may help move thermal thinking beyond conventional heat transfer.<br><br><span class="zh">本项目从梳理已有研究、被遗忘的想法、相邻领域和实际机制开始，寻找可能帮助热学思维超越传统传热框架的路径。</span></p>
+      </div>
+      <div class="wrap research-list">
+        <div class="research-item"><span class="dot"></span><div><strong>Heat-origin design</strong><span>Reducing or shaping waste heat at the point where useful energy degrades into thermal disorder.</span></div></div>
+        <div class="research-item"><span class="dot"></span><div><strong>Thermal circuits</strong><span>Exploring thermal analogues of components used in electrical systems: storage, direction, switching, buffering, oscillation, and conversion.</span></div></div>
+        <div class="research-item"><span class="dot"></span><div><strong>Phonons and vibration</strong><span>Investigating whether lattice vibration and material structure can be filtered, scattered, biased, or converted more intelligently.</span></div></div>
+        <div class="research-item"><span class="dot"></span><div><strong>Resonance and oscillation</strong><span>Learning from thermoacoustics, regenerators, caloric effects, standing waves, and cyclic thermal systems.</span></div></div>
+        <div class="research-item"><span class="dot"></span><div><strong>Directional heat flow</strong><span>Thermal diodes, rectifiers, anisotropic materials, layered surfaces, and geometry that can bias heat pathways.</span></div></div>
+        <div class="research-item"><span class="dot"></span><div><strong>Conversion and recovery</strong><span>Thermoelectrics, radiative cooling, phase-change materials, heat batteries, and methods for capturing useful work from gradients.</span></div></div>
+      </div>
+    </section>
 
-    <article class="card">
-      <h2>Thermal Logic</h2>
-      <p>
-        Thermal Logic is the component language underneath that frame: source, sink,
-        pathway, gate, delay, buffer, surface, medium, boundary, and exchange.
-      </p>
-    </article>
+    <section id="notes">
+      <div class="wrap contact">
+        <div>
+          <h2>Research Notes<span class="zh-title">研究札记</span></h2>
+          <p>The research notes are short linked pages forming the foundation of the Thermal Logic inquiry.</p>
+          <p class="zh">研究札记是独立链接页面，用来逐步建立热逻辑研究的基础。</p>
+          <p>They are kept separate from the homepage so each note can be updated without rebuilding the whole site.</p>
+          <p class="zh">它们与首页分开保存，因此每篇札记都可以单独更新，而不必重做整个网站。</p>
+          <a class="button" href="research.html">View Research Notes</a>
+        </div>
+        <div class="note">
+          <strong>001:</strong> Poynting & Thomson — heat as exchange.<br><br>
+          <strong>002:</strong> Maxwell — heat, motion, and selection.<br><br>
+          <strong>003:</strong> Fleming — waves, media, and boundaries.
+        </div>
+      </div>
+    </section>
 
-    <article class="card">
-      <h2>Research Notes</h2>
-      <p>
-        Short technical reflections forming the foundation of the project.
-      </p>
-      <p><a class="button" href="research.html">View research notes →</a></p>
-    </article>
-  </section>
-</main>
+    <section>
+      <div class="wrap section-head">
+        <h2>Why now?<span class="zh-title">为什么是现在？</span></h2>
+        <p>Excess heat is a shared constraint across data centres, chips, batteries, buildings, transport, industrial systems, and energy infrastructure. As machines become denser and more capable, unwanted heat becomes a hard limit, not a side issue.<br><br><span class="zh">过剩热量已经成为数据中心、芯片、电池、建筑、交通、工业系统和能源基础设施共同面对的限制。随着机器更加密集、更加强大，不需要的热不再是次要问题，而是硬性边界。</span></p>
+      </div>
+      <div class="wrap cards">
+        <article class="card">
+          <div class="num">Scale</div>
+          <h3>Small gains matter</h3>
+          <p>At modern infrastructure scale, even modest thermal improvements can affect energy demand, hardware life, operating cost, and system reliability.</p>
+        </article>
+        <article class="card">
+          <div class="num">Limit</div>
+          <h3>Cooling is mature</h3>
+          <p>Fans, pumps, liquid loops, heat exchangers, and thermal transfer systems are highly refined. That maturity is precisely why a different frame may be needed.</p>
+        </article>
+        <article class="card">
+          <div class="num">Frame</div>
+          <h3>From herding to control</h3>
+          <p>Thermal Logic explores whether heat can move from being a beast to be herded into a behaviour that can be patterned, conditioned, and controlled.</p>
+        </article>
+      </div>
+    </section>
 
-<footer>
-  <p>ThermalLogic.org — private research initiative.</p>
-  <p>No miracle claims. No free-energy claims. No political programme.</p>
-</footer>
+    <section id="associate">
+      <div class="wrap contact">
+        <div>
+          <h2>Associate with the project<span class="zh-title">参与或联系本项目</span></h2>
+          <p>We are looking for researchers, engineers, materials scientists, data-centre specialists, students, inventors, builders, and practical thinkers who are interested in the deeper control of unwanted heat.</p>
+          <p class="zh">我们希望联系对不需要的热进行更深层控制感兴趣的研究人员、工程师、材料科学家、数据中心专家、学生、发明者、建设者和务实思考者。</p>
+          <p>If you have seen overlooked research, abandoned ideas, useful mechanisms, relevant patents, unusual materials, experiments, failures, or a serious line of thought, we would like to hear from you.</p>
+          <p class="zh">如果你了解被忽视的研究、被放弃的想法、有用的机制、相关专利、特殊材料、实验、失败案例或严肃的思路，我们希望听到你的消息。</p>
+          <a class="button" href="mailto:hello@thermallogic.org?subject=Thermal%20Logic%20association">Contact Thermal Logic</a>
+        </div>
+        <div class="note">
+          <strong>Status:</strong> Thermal Logic is a private exploratory research project. It is not currently a commercial product, investment offer, or claim of a completed technology.<br><br>
+          <strong>Focus:</strong> physics, engineering, materials, mechanisms, evidence, and testable ideas.<br><br>
+          <strong>Boundary:</strong> no climate politics, no miracle claims, no free-energy claims.
+        </div>
+      </div>
+    </section>
+  </main>
 
+  <footer>
+    <div class="wrap">© Thermal Logic. Private research initiative. ThermalLogic.org</div>
+  </footer>
 </body>
 </html>
