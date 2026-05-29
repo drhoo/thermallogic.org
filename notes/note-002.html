@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Research Note 002 — Maxwell | Thermal Logic</title>
+  <meta name="description" content="Research Note 002 from Thermal Logic: Maxwell, heat, motion, and selection." />
+  <style>
+    .zh { color: #4d4b46; font-size: 0.94em; margin-top: 10px; }
+    .zh-title { display: block; font-size: 0.62em; letter-spacing: -0.03em; margin-top: 12px; color: #4d4b46; }
+    .lang-note { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-size: 13px; background: rgba(255,255,255,0.68); margin-bottom: 18px; }
+    .lang-note strong { color: var(--ink); }
+
+    :root {
+      --bg: #f7f6f2;
+      --ink: #181817;
+      --muted: #62615d;
+      --line: #d9d5ca;
+      --panel: #ffffff;
+      --warm: #b14a26;
+      --deep: #24323a;
+      --soft: #eee9df;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+
+    a { color: inherit; }
+
+    .wrap {
+      width: min(1120px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: rgba(247, 246, 242, 0.92);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 0;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 720;
+      letter-spacing: -0.03em;
+      font-size: 21px;
+    }
+
+    .mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 2px solid var(--ink);
+      display: grid;
+      place-items: center;
+      position: relative;
+      background: var(--panel);
+    }
+
+    .mark::before,
+    .mark::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      background: var(--warm);
+    }
+
+    .mark::before {
+      width: 14px;
+      height: 2px;
+      transform: rotate(35deg);
+    }
+
+    .mark::after {
+      width: 2px;
+      height: 14px;
+      transform: rotate(35deg);
+    }
+
+    .navlinks {
+      display: flex;
+      gap: 22px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .navlinks a {
+      text-decoration: none;
+    }
+
+    .hero {
+      padding: 86px 0 58px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+      gap: 52px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      color: var(--warm);
+      font-weight: 720;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-size: clamp(44px, 7vw, 82px);
+      line-height: 0.95;
+      letter-spacing: -0.07em;
+      margin: 0 0 26px;
+    }
+
+    .lead {
+      font-size: clamp(20px, 2.2vw, 28px);
+      line-height: 1.25;
+      letter-spacing: -0.035em;
+      color: var(--deep);
+      margin: 0 0 26px;
+      max-width: 760px;
+    }
+
+    .plain {
+      color: var(--muted);
+      font-size: 17px;
+      max-width: 690px;
+      margin: 0;
+    }
+
+    .hero-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 26px;
+      box-shadow: 0 20px 50px rgba(30, 28, 22, 0.08);
+    }
+
+    .diagram {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    section {
+      padding: 64px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 0.72fr 1.28fr;
+      gap: 42px;
+      align-items: start;
+      margin-bottom: 34px;
+    }
+
+    h2 {
+      font-size: clamp(30px, 3.5vw, 48px);
+      line-height: 1;
+      letter-spacing: -0.055em;
+      margin: 0;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 24px;
+      min-height: 200px;
+    }
+
+    .card .num {
+      font-size: 13px;
+      font-weight: 720;
+      color: var(--warm);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h3 {
+      font-size: 22px;
+      line-height: 1.1;
+      letter-spacing: -0.035em;
+      margin: 0 0 12px;
+    }
+
+    .card p, .card li {
+      color: var(--muted);
+      margin: 0;
+      font-size: 15.5px;
+    }
+
+    .card ul {
+      padding-left: 18px;
+      margin: 0;
+    }
+
+    .wide {
+      background: var(--deep);
+      color: #fff;
+      border-radius: 30px;
+      padding: 38px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .wide p {
+      color: rgba(255,255,255,0.76);
+      margin: 0;
+      font-size: 18px;
+    }
+
+    .wide h2 {
+      color: #fff;
+    }
+
+    .principles {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .principle {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 18px;
+      padding: 16px;
+      color: rgba(255,255,255,0.86);
+      font-size: 15px;
+    }
+
+    .research-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .research-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 18px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      margin-top: 8px;
+      border-radius: 50%;
+      background: var(--warm);
+      flex: 0 0 auto;
+    }
+
+    .research-item strong {
+      display: block;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .research-item span {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    .contact {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 36px;
+      display: grid;
+      grid-template-columns: 1fr 0.8fr;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .contact p {
+      color: var(--muted);
+      font-size: 17px;
+      margin: 0 0 18px;
+    }
+
+    .button {
+      display: inline-flex;
+      padding: 13px 18px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 650;
+      margin-top: 8px;
+    }
+
+    .note {
+      background: var(--soft);
+      border-radius: 20px;
+      padding: 20px;
+      color: var(--muted);
+      font-size: 14.5px;
+    }
+
+    footer {
+      padding: 34px 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 850px) {
+      .hero-grid,
+      .section-head,
+      .wide,
+      .contact {
+        grid-template-columns: 1fr;
+      }
+
+      .cards,
+      .research-list,
+      .principles {
+        grid-template-columns: 1fr;
+      }
+
+      .navlinks { display: none; }
+      .hero { padding-top: 54px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <nav>
+        <div class="brand"><span class="mark" aria-hidden="true"></span> Thermal Logic</div>
+        <div class="navlinks">
+          <a href="../index.html">Home</a>
+          <a href="../research.html">Research Notes</a>
+          <a href="../index.html#associate">Associate</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <div class="eyebrow">Research Note 002 · 研究札记</div>
+        <h1>Maxwell<span class="zh-title">热、运动与选择。</span></h1>
+        <p class="lead">Disorder may not be the end of control. It may be the point where better information becomes necessary.</p>
+        <p class="lead zh">无序未必是控制的终点，它可能是需要更好信息的起点。</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap contact">
+        <div>
+          <p>Maxwell’s work forces a deeper question: if heat is connected to molecular motion, then disorder may not simply be an enemy of control. It may be the point at which ordinary control fails because information is insufficient.</p>
+          <p class="zh">麦克斯韦提醒我们，看似无序的热运动并不一定只是控制的终点。它也可能说明我们缺少足够的信息。</p>
+          <p>A system that appears random at one scale may contain useful distinctions at another: speed, direction, position, collision, boundary condition, and timing.</p>
+          <p class="zh">一个在某个尺度上看似随机的系统，在另一个尺度上可能仍包含速度、方向、位置、碰撞、边界条件和时序等有用差异。</p>
+          <p>Thermal Logic does not claim that disorder can be magically defeated. It asks whether better selection, better surfaces, better pathways, and better timing can convert some forms of thermal disorder into usable behaviour.</p>
+          <p class="zh">热逻辑并不声称可以神奇地消除无序，而是询问更好的选择、表面、路径和时序是否能把某些热行为转化为可利用的行为。</p>
+          <a class="button" href="../research.html">Back to Research Notes</a>
+        </div>
+        <div class="note">
+          <strong>Status:</strong> Working research note.<br><br>
+          <strong>Focus:</strong> historical clue, modern mechanism, testable language.<br><br>
+          <strong>Boundary:</strong> open mind, hard floor.
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">© Thermal Logic. Private research initiative. ThermalLogic.org</div>
+  </footer>
+</body>
+</html>
